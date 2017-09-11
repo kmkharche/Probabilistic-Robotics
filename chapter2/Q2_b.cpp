@@ -58,7 +58,6 @@ int main()
 		Pr = PrNew;
 
 		double sample = getRandomNumber(0,1);
-		cout << sample << endl;
 		if (sample < Ps)
 			cout << "sunny ";
 		else if(sample < (Ps+Pc))
@@ -69,24 +68,6 @@ int main()
 	}
 	
 	cout << endl;
-
-	//Standard Distribution
-	///For standard distribution i.e. steady state,  use a large number of days
-	day = 10000;
-
-	for (int i=1;i<day;++i)
-	{
-		double PsNew = Pss*Ps + Psc*Pc + Psr*Pr;
-		double PcNew = Pcs*Ps + Pcc*Pc + Pcr*Pr;
-		double PrNew = Prs*Ps + Prc*Pc + Prr*Pr;
-
-		Ps = PsNew;
-		Pc = PcNew;
-		Pr = PrNew;
-	}
-	cout << "The standard distribution probability that a day is sunny is " << Ps << "." << endl;
-	cout << "The standard distribution probability that a day is cloudy is " << Pc << "." << endl;
-	cout << "The standard distribution probability that a day is rainy is " << Pr << "." << endl;
 
 	return 0;
 }
