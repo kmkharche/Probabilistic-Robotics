@@ -2,9 +2,9 @@
 
 import numpy as np
 
-def predictNextState(prevState,control,A,B):
+def predictNextState(prevState,A,R):
 
-	state = A*prevState + B*control
+	state = A*prevState + R
 	return state
 
 if __name__=="__main__":
@@ -20,14 +20,15 @@ if __name__=="__main__":
 
 	A = np.matrix([[ 1, delta_time] , [ 0, 1 ]])
 
-	B = np.matrix([[(delta_time**2)/2.0] , [delta_time]])
-	
+	factor = np.matrix([[(delta_time**2)/2.0] , [delta_time]])
+
 	for i in range(totalTime):
 
-		control = np.random.normal(mu_control,sigma_control,1)
-		currentState = predictNextState(currentState,control,A,B)
+		acceleration = np.random.normal(mu_control,sigma_control,1)
+		Rt = factor*acceleration
+		currentState = predictNextState(currentState,A,Rt)
 
 		print "Time = ", i
-		print "Acceleration = ", control
+		print "Acceleration = ", acceleration
 
 		print (currentState)
