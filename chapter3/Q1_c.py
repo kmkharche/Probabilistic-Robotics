@@ -2,11 +2,6 @@
 
 import numpy as np
 
-def predictNextState(prevState,A,R):
-
-	state = A*prevState + R
-	return state
-
 if __name__=="__main__":
 
 	#state vector = [x,xdot]
@@ -20,15 +15,18 @@ if __name__=="__main__":
 
 	A = np.matrix([[ 1, delta_time] , [ 0, 1 ]])
 
-	factor = np.matrix([[(delta_time**2)/2.0] , [delta_time]])
+	Rt = np.matrix([[(delta_time**2)/2.0,0.0] , [delta_time,0.0]])
+	Sigma_t=np.matrix([[0.,0.],[0.,0.]])
 
 	for i in range(totalTime):
 
 		acceleration = np.random.normal(mu_control,sigma_control,1)
-		Rt = factor*acceleration
-		currentState = predictNextState(currentState,A,Rt)
+		currentState = A*currentState
+		Sigma_t = A*Sigma_t*np.transpose(A) + Rt
 
 		print "Time = ", i
-		print "Acceleration = ", acceleration
 
-		print (currentState)
+		print "mu = ", currentState
+		print "covariance = ", Sigma_t
+
+		
